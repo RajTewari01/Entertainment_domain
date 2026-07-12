@@ -1,0 +1,12 @@
+# ──────────────────────────────────────────────────────────────
+#  WORK PROFILE — Overrides applied when working inside
+#  company/work project directories.
+#
+#  Activated via [includeIf] in the main .gitconfig:
+#    [includeIf "gitdir:D:/Work/"]
+#        path = D:/Sora_Health_System/.gitconfig-work
+# ──────────────────────────────────────────────────────────────
+[user]
+    email = YOUR_WORK_EMAIL@company.com[YOUR_WORK_EMAIL_ADDRESS]
+    # name = Your Work Name        # Uncomment if your work name differs
+    # signingkey = WORK_GPG_KEY    # Uncomment if your company requires signed commits

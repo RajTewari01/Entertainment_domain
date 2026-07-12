@@ -1,0 +1,2 @@
+[tool.coverage.run]
+data_file = ".cache/.coverage"

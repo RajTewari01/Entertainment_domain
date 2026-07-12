@@ -1,0 +1,39 @@
+app:
+    name   : Alypion Entertainment
+    version: "0.0.1"
+    stage  : ${APP_STAGE:=development}
+    authors:
+        - name   : Biswadeep Tewari
+          email  : tewari765@gmail.com
+          github : https://github.com/RajTewari01
+          role   : "Lead Architect"
+    description : 
+        en : |
+            Alypion Entertainment is an innovative platform dedicated to digital media, content creation, and interactive entertainment. Our mission is to provide powerful tools and seamless experiences for creators and audiences alike.
+        es : |
+            Alypion Entertainment es una plataforma innovadora dedicada a los medios digitales, la creación de contenido y el entretenimiento interactivo. Nuestra misión es proporcionar herramientas poderosas y experiencias fluidas tanto para creadores como para el público.
+        fr : |
+            Alypion Entertainment est une plateforme innovante dédiée aux médias numériques, à la création de contenu et au divertissement interactif. Notre mission est de fournir des outils puissants et des expériences fluides aux créateurs et au public.
+    
+# Execution Settings
+execution:
+    deferred_execution: false
+    ensure_files: true
+
+# Security & Authentication
+security:
+    sessionware_algorithm: "HS256"
+    jwt_algorithm: "RS256"
+    cookie_samesite: "Lax"
+    cookie_secure: false
+    jwt_secret_key: ${JWT_SECRET:=super-secret-enterprise-key}
+    refresh_token_limit: 1296000 # 15 days in seconds
+    access_token_limit: 900 # 15 minutes in seconds
+
+# Deployment & Routing
+deployment:
+    canary_enabled: false
+    canary_percentage: 0.0
+    otel_logging: "Both"
+    otel_endpoint: "http://localhost:4317"
+    grafana_endpoint: "http://localhost:3000"

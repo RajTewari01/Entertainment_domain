@@ -1,0 +1,24 @@
+<?xml version='1.0.0' encoding="UTF-8"?>
+<manifest>
+    <plugin id='ConfigService'>
+        <metadata>
+            <name>config_service</name>
+            <version>1.0.0</version>
+            <author>Raj Tewari</author>
+            <description>
+                config service provide config settings for all services.
+            </description>
+        </metadata>
+        <runtime>
+            <enabled>true</enabled>
+            <priority>1</priority>
+        </runtime>
+        <modules>
+            <module name="config">src.backend.config.loader</module>
+            <module name="base">src.backend.config.base</module>
+            <module name="prod">src.backend.config.prod</module>
+            <module name="stage">src.backend.config.staging</module>
+            <module name="dev">src.backend.config.dev</module>
+        </modules>
+    </plugin>
+</manifest>

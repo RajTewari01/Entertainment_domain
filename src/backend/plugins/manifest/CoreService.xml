@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest version="1.0">
+    <plugin id="coreservice">
+        <metadata>
+            <name>core_service</name>
+            <version>1.0.0</version>
+            <author>Raj Tewari</author>
+            <description>
+                core service provide core apis for all services base apis and configuration settings.
+            </description>
+        </metadata>
+        <runtime>
+            <enabled>true</enabled>
+            <priority>1</priority>
+        </runtime>
+        <modules>
+            <module name="paths">src.backend.core.location</module>
+            <module name="exceptions">src.backend.core.exceptions</module>
+            <module name="otel">src.backend.core.otel_init</module>
+        </modules>
+        <!-- Third-party packages needed (for validation / documentation) -->
+        <dependencies>
+            <package version=">=2.0.0">pydantic</package>
+            <package version=">=6.0.0">yaml</package>
+            <package version=">=41.0.0">cryptography</package>
+        </dependencies>
+    </plugin>
+</manifest>
