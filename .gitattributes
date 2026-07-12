@@ -1,5 +1,5 @@
 # Auto-normalize text endings.
-*text = auto
+* text=auto
 
 # scripts to force lf on
 *.py text eol=lf

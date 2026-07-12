@@ -1,0 +1,125 @@
+services:
+  vault_server_1:
+    image: hashicorp/vault:latest
+    container_name: vault_1
+    command: server
+    restart: unless-stopped
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - ./config/vault-config.docker.hcl:/vault/config/vault-config.docker.hcl:ro
+      - vlt_1:/vault/data
+      - ./tls:/vault/tls
+    environment:
+      - VAULT_ADDR=https://0.0.0.0:8200
+      - VAULT_API_ADDR=https://vault_1:8200
+      - VAULT_CLUSTER_ADDR=https://vault_1:8201
+      - VAULT_RAFT_NODE_ID=vault_1
+      - VAULT_CACERT=/vault/tls/public.crt
+    ports:
+      - "8200:8200"
+    healthcheck:
+      test: ["CMD", "vault", "status", "-tls-skip-verify"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    networks:
+      - entertainment_domain
+
+  vault_server_2:
+    image: hashicorp/vault:latest
+    container_name: vault_2
+    command: server
+    restart: unless-stopped
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - ./config/vault-config.docker.hcl:/vault/config/vault-config.docker.hcl
+      - vlt_2:/vault/data
+      - ./tls:/vault/tls
+    environment:
+      - VAULT_ADDR=https://0.0.0.0:8200
+      - VAULT_API_ADDR=https://vault_2:8200
+      - VAULT_CLUSTER_ADDR=https://vault_2:8201
+      - VAULT_RAFT_NODE_ID=vault_2
+      - VAULT_CACERT=/vault/tls/public.crt
+    ports:
+      - "8201:8200"
+    healthcheck:
+      test: ["CMD", "vault", "status", "-tls-skip-verify"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    networks:
+      - entertainment_domain
+
+  vault_server_3:
+    image: hashicorp/vault:latest
+    container_name: vault_3
+    command: server
+    restart: unless-stopped
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - ./config/vault-config.docker.hcl:/vault/config/vault-config.docker.hcl
+      - vlt_3:/vault/data
+      - ./tls:/vault/tls
+    environment:
+      - VAULT_ADDR=https://0.0.0.0:8200
+      - VAULT_API_ADDR=https://vault_3:8200
+      - VAULT_CLUSTER_ADDR=https://vault_3:8201
+      - VAULT_RAFT_NODE_ID=vault_3
+      - VAULT_CACERT=/vault/tls/public.crt
+    ports:
+      - "8202:8200"
+    healthcheck:
+      test: ["CMD", "vault", "status", "-tls-skip-verify"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    networks:
+      - entertainment_domain
+  
+  agent_sidecar:
+    container_name: agent_sidecar
+    image: hashicorp/vault:latest
+    restart: unless-stopped
+    cap_add:
+      - IPC_LOCK
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        mkdir -p /vault/approle
+        echo "$$VAULT_ROLE_ID" > /vault/approle/role-id
+        echo "$$VAULT_SECRET_ID" > /vault/approle/secret-id
+        vault agent -config=/vault/config/agent-sidecar.hcl
+    environment:
+      - VAULT_CACERT=/vault/tls/public.crt
+    volumes:
+      - ./config/agent-sidecar.hcl:/vault/config/agent-sidecar.hcl:ro
+      - vlt_secrets:/vault/secrets:rw
+      - ./tls:/vault/tls:ro
+    networks:
+      - entertainment_domain
+    depends_on:
+      vault_server_1:
+        condition: service_healthy
+
+volumes:
+  vlt_1: 
+  vlt_2: 
+  vlt_3: 
+
+  vlt_secrets:
+    name: entertainment_secrets
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+
+networks:
+  entertainment_domain:
+    external: true  
