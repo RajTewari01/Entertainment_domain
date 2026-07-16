@@ -20,7 +20,7 @@ auto_auth {
 
 template {
   contents = <<-EOF
-  {{with secret "secret/data/sora/monitoring"}}
+  {{with secret "secret/data/entertainment/monitoring"}}
   {{ .Data.data.GRAFANA_PASSWORD }}
   {{end}}
   EOF
