@@ -1,7 +1,7 @@
 import pytest #type:ignore[import]
 from unittest.mock import patch, mock_open
 from types import MappingProxyType
-from src.backend.config.loader import ConfigSetup #type:ignore[import]
+from src.backend.config.loader import ConfigSetup,_get_env #type:ignore[import]
 
 @pytest.mark.unit
 @pytest.mark.parametrize("stage", ["development", "staging", "production"])
@@ -45,9 +45,9 @@ def test_get_env_caching(mock_config):
 
     mock_config.return_value = MappingProxyType({"cached": True})
 
-    ConfigSetup._get_env.cache_clear()
-    res1 = ConfigSetup._get_env()
-    res2 = ConfigSetup._get_env()
+    _get_env.cache_clear()
+    res1 = _get_env()
+    res2 = _get_env()
     
     assert res1 is res2, "The returned object should be the exact same cached instance"
     mock_config.assert_called_once_with(get_dict=True)
