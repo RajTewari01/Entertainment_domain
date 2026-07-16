@@ -23,7 +23,8 @@ class StagingConfig(BaseSettings):
     Canary_percentage : float|int = 0.0
     Canary_Enabled : bool = False
     
-    Otel_Logging : Literal['Console','Otel','Both'] = 'Both'
+    Otel_Processor : Literal['Console','Otel','Both'] = 'Both'
+    Otel_Exporter : Literal['Batch','Simple'] = 'Batch'
     Otel_Endpoint : str = "http://otel-collector-staging:4317"
 
     Cleaning_Worker_Thread_Count : int = 2
