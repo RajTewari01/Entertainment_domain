@@ -12,7 +12,7 @@ import os
 from . import loader as plugins_loader
 
 BaseSettingsConfig = plugins_loader.ConfigService.base.BaseConfig
-StaticConfig      = plugins_loader.ConfigService.base.StaticConfig
+StaticConfig       = plugins_loader.ConfigService.base.StaticConfig
 DevConfig          = plugins_loader.ConfigService.dev.DevConfig
 StagingConfig      = plugins_loader.ConfigService.stage.StagingConfig
 ProdConfig         = plugins_loader.ConfigService.prod.ProdConfig
@@ -96,13 +96,12 @@ class ConfigSetup:
             StaticConfig(),cfg
         )
     
-    @classmethod
-    @lru_cache(maxsize=10)
-    def _get_env(cls) ->  MappingProxyType[str,Any]:
-        return cls.config(get_dict=True)
+@lru_cache(maxsize=10)
+def _get_env() ->  MappingProxyType[str,Any]:
+    return ConfigSetup.config(get_dict=True)
 
 
-Config : MappingProxyType[str,Any] = ConfigSetup.config()
+Config : MappingProxyType[str,Any] = _get_env()
 
 
 if __name__ == '__main__':
