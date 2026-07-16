@@ -74,7 +74,8 @@ class BaseConfig(BaseSettings):
     Canary_percentage : float|int
     Canary_Enabled : bool
     
-    Otel_Logging : Literal['Console','Otel','Both']
+    Otel_Processor : Literal['Console','Otel','Both']
+    Otel_Exporter : Literal['Batch','Simple']
     Otel_Endpoint : str 
 
     Cleaning_Worker_Thread_Count : int

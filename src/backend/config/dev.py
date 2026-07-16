@@ -22,7 +22,8 @@ class DevConfig(BaseSettings):
     Canary_percentage : float|int =0.0
     Canary_Enabled : bool = False
     
-    Otel_Logging : Literal['Console','Otel','Both'] = 'Otel'
+    Otel_Processor : Literal['Console','Otel','Both'] = 'Otel'
+    Otel_Exporter : Literal['Batch','Simple'] = 'Batch'
     Otel_Endpoint : str = "https://localhost:4317"
 
     Cleaning_Worker_Thread_Count : int = 1

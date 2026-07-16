@@ -3,7 +3,7 @@ from typing import Literal
 from types import ModuleType
 from . import loader
 
-loader = loader.ConfigService
+loader : ModuleType = loader.ConfigService
 BaseSettingsConfig = loader.base.BaseSettings
 
 class ProdConfig(BaseSettings):
@@ -25,7 +25,8 @@ class ProdConfig(BaseSettings):
     Canary_percentage : float|int = 0.0
     Canary_Enabled : bool = False
     
-    Otel_Logging : Literal['Console','Otel','Both'] = 'Otel'
+    Otel_Processor : Literal['Console','Otel','Both'] = 'Otel'
+    Otel_Exporter : Literal['Batch','Simple'] = 'Batch'
     Otel_Endpoint : str = "http://otel-collector:4317"
 
     Cleaning_Worker_Thread_Count : int = 2
